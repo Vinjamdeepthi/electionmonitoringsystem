@@ -45,7 +45,7 @@ const Register = () => {
             <option value="Admin">Admin</option>
             <option value="Citizen">Citizen</option>
             <option value="Observer">Observer</option>
-            <option value="Analyst">Analyst</option>
+           
           </select>
 
           <button type="submit" className="btn">Register</button>

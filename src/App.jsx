@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import CitizenDashboard from "./pages/CitizenDashboard";
 import ObserverDashboard from "./pages/ObserverDashboard";
-import AnalystDashboard from "./pages/AnalystDashboard";
+
 
 // Protect routes by role
 const PrivateRoute = ({ children, role }) => {
@@ -50,14 +50,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/analyst"
-            element={
-              <PrivateRoute role="Analyst">
-                <AnalystDashboard />
-              </PrivateRoute>
-            }
-          />
+          
 
           {/* Catch-all redirect */}
           <Route path="*" element={<Navigate to="/login" replace />} />
