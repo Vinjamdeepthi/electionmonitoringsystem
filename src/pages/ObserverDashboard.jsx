@@ -7,8 +7,8 @@ function ObserverDashboard() {
   const navigate = useNavigate();
 
   const [candidates] = useState([
-    { name: "Arjun Singh", party: "Unity Party", constituency: "North Zone" },
-    { name: "Priya Patel", party: "Progressive Front", constituency: "South Zone" },
+    { name: "Deepthi", party: "Unity Party", constituency: "North Zone" },
+    { name: "Lasya", party: "Progressive Front", constituency: "South Zone" },
   ]);
 
   const [reports, setReports] = useState([]);
@@ -52,7 +52,7 @@ function ObserverDashboard() {
         <ul>
           <li>📋 Monitor Activities</li>
           <li>⚠️ Report Anomalies</li>
-          <li>📢 Transparency Insights</li>
+          
         </ul>
         <button
           className="logout-btn"

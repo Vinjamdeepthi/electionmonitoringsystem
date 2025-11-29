@@ -180,7 +180,7 @@ function CitizenDashboard() {
           width: 100%;
           max-width: 420px;
           box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-          border: 1px solid #d3ddf5;
+          border: 1px solid #020202ff;
         }
 
         .title {
@@ -193,20 +193,19 @@ function CitizenDashboard() {
           text-align: center;
           color: #475569;
         }
+.info-section h3 {
+  margin: 8px 0 2px;
+  color: #000 !important;   /* Labels → Black */
+  font-weight: bold;
+}
 
-        .info-section {
-          background: #f8faff;
-          border: 1px solid #c7d2fe;
-          padding: 15px;
-          border-radius: 10px;
-          margin-bottom: 25px;
-        }
+.info-section p {
+  color: #000 !important;   /* Values → Black */
+  font-weight: 500;
+}
 
-        .info-section h3 {
-          margin: 8px 0 2px;
-          color: #1e3a8a;
-        }
 
+        
         .status.done {
           color: green;
           font-weight: bold;
