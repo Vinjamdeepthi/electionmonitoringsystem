@@ -13,21 +13,40 @@ function AdminDashboard() {
 
   const [data, setData] = useState({
     citizens: [
-      { name: "Ravi Kumar", age: 32, city: "Hyderabad" },
-      { name: "Sneha Reddy", age: 27, city: "Guntur" },
-      { name: "deepthi", age: 76, city: "vijayawada" },
+      { name: "sravya", age: 32, city: "Hyderabad" },
+      { name: "lasya", age: 27, city: "Guntur" },
+      { name: "deepthi", age: 76, city: "Vijayawada" },
+      { name: "ananya", age: 45, city: "Visakhapatnam" },
+      { name: "priya", age: 29, city: "Tirupati" },
+      { name: "lakshmi", age: 34, city: "Kurnool" },
+      { name: "sindhu", age: 41, city: "Nellore" },
+      { name: "radhika", age: 38, city: "Rajahmundry" }
     ],
+
     candidates: [
       { name: "Arjun Singh", party: "Unity Party", constituency: "North Zone" },
       { name: "Priya Patel", party: "Progressive Front", constituency: "South Zone" },
+      { name: "Rohit Kumar", party: "Democratic Alliance", constituency: "East Zone" },
+      { name: "Anita Sharma", party: "People's Voice", constituency: "West Zone" },
+      { name: "Vikram Reddy", party: "National Reform Party", constituency: "Central Zone" },
+      { name: "Sneha Joshi", party: "Unity Party", constituency: "Coastal Zone" },
+      { name: "Karan Mehta", party: "Progressive Front", constituency: "Highland Zone" },
+      { name: "Neha Verma", party: "Democratic Alliance", constituency: "River Valley Zone" }
     ],
+
     elections: [
       { title: "General Election 2025", date: "2025-11-20", status: "Scheduled" },
       { title: "Local Election", date: "2025-08-15", status: "Completed" },
+      { title: "State Assembly Election", date: "2025-09-10", status: "Ongoing" },
+      { title: "Municipal Election", date: "2025-07-05", status: "Completed" },
+      { title: "By-Election", date: "2025-10-01", status: "Scheduled" },
+      { title: "Panchayat Election", date: "2025-06-20", status: "Completed" },
+      { title: "Mayoral Election", date: "2025-12-05", status: "Scheduled" }
     ],
   });
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSave = () => {
     const newData = { ...data };
@@ -75,6 +94,7 @@ function AdminDashboard() {
               <option value="">Select Status</option>
               <option value="Scheduled">Scheduled</option>
               <option value="Completed">Completed</option>
+              <option value="Ongoing">Ongoing</option>
             </select>
           </>
         );
@@ -121,11 +141,13 @@ function AdminDashboard() {
       <div className="sidebar">
         <h2>🛠️ Admin Panel</h2>
         <p className="user">👋 {user?.username || "Admin"}</p>
+
         <ul>
           <li onClick={() => setActiveSection("citizens")} className={activeSection === "citizens" ? "active" : ""}>👥 Citizens</li>
           <li onClick={() => setActiveSection("candidates")} className={activeSection === "candidates" ? "active" : ""}>🎯 Candidates</li>
           <li onClick={() => setActiveSection("elections")} className={activeSection === "elections" ? "active" : ""}>🗳️ Elections</li>
         </ul>
+
         <button className="logout-btn" onClick={() => { logout(); navigate("/login"); }}>Logout</button>
       </div>
 
@@ -133,8 +155,11 @@ function AdminDashboard() {
       <div className="main-content">
         <div className="header">
           <h2>{activeSection.toUpperCase()}</h2>
-          <button className="add-btn" onClick={() => { setFormData({}); setShowForm(true); setEditIndex(null); }}>➕ Add</button>
+          <button className="add-btn" onClick={() => { setFormData({}); setShowForm(true); setEditIndex(null); }}>
+            ➕ Add
+          </button>
         </div>
+
         <div className="table-container">{renderTable()}</div>
       </div>
 
@@ -144,6 +169,7 @@ function AdminDashboard() {
           <div className="popup-card">
             <h3>{editIndex !== null ? "Edit" : "Add"} {activeSection}</h3>
             {renderFormFields()}
+
             <div className="popup-actions">
               <button className="btn" onClick={handleSave}>💾 Save</button>
               <button className="btn cancel" onClick={() => setShowForm(false)}>❌ Cancel</button>
@@ -152,7 +178,7 @@ function AdminDashboard() {
         </div>
       )}
 
-      {/* Styles */}
+      {/* FULL AB-HOVER UI CSS */}
       <style>{`
         html, body, #root {
           margin: 0;
@@ -160,45 +186,54 @@ function AdminDashboard() {
           height: 100%;
           width: 100%;
           font-family: 'Segoe UI', sans-serif;
-        }
-
-        *, *::before, *::after {
-          box-sizing: border-box;
+          background: #f5f8ff;
         }
 
         .dashboard-container {
           display: flex;
           height: 100vh;
-          width: 100vw;
-          background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-          background-size: 300% 300%;
-          animation: gradientShift 12s ease infinite;
-          color: white;
-        }
-
-        @keyframes gradientShift {
-          0% { background-position:0% 50% }
-          50% { background-position:100% 50% }
-          100% { background-position:0% 50% }
+          background: #f5f8ff;
+          color: #333;
         }
 
         .sidebar {
           width: 250px;
-          background: rgba(255,255,255,0.15);
-          backdrop-filter: blur(10px);
+          background: #ffffff;
+          border-right: 1px solid #dce3f0;
           padding: 20px;
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
         }
 
-        .sidebar h2 { text-align: center; margin-bottom: 20px; }
-        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar h2 { text-align: center; color: #1e3a8a; }
+        .sidebar ul { padding: 0; list-style: none; }
+
         .sidebar li {
-          padding: 12px; margin: 8px 0; border-radius: 8px; cursor: pointer; transition: 0.3s;
+          padding: 12px;
+          border-radius: 8px;
+          border: 1px solid transparent;
+          transition: 0.3s;
+          cursor: pointer;
+          margin: 5px 0;
+          font-size: 15px;
         }
-        .sidebar li:hover, .sidebar li.active { background: rgba(255,255,255,0.3); }
-        .logout-btn { background: linear-gradient(90deg,#ff416c,#ff4b2b); border: none; padding: 10px; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; }
+
+        .sidebar li:hover, .sidebar li.active {
+          background: #e8f0ff;
+          border: 1px solid #3b82f6;
+          color: #1e40af;
+        }
+
+        .logout-btn {
+          margin-top: 20px;
+          padding: 12px;
+          border: none;
+          border-radius: 8px;
+          background: #ef4444;
+          color: white;
+          cursor: pointer;
+          font-weight: bold;
+        }
 
         .main-content {
           flex: 1;
@@ -210,45 +245,55 @@ function AdminDashboard() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 20px;
+        }
+
+        .add-btn {
+          padding: 10px 14px;
+          background: #2563eb;
+          color: white;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: bold;
         }
 
         table {
           width: 100%;
           border-collapse: collapse;
+          background: white;
+          border-radius: 8px;
+          overflow: hidden;
         }
 
-        th, td {
-          border-bottom: 1px solid rgba(255,255,255,0.
-                  th, td {
-          border-bottom: 1px solid rgba(255,255,255,0.2);
+        th {
+          background: #e8f0ff;
+          color: #1e3a8a;
+          padding: 12px;
+          border-bottom: 2px solid #c7d7f5;
+        }
+
+        td {
           padding: 10px;
-          text-align: left;
+          border-bottom: 1px solid #e0e7f5;
         }
 
-        .add-btn {
-          background: #00c851;
-          border: none;
-          padding: 10px 14px;
-          border-radius: 6px;
-          cursor: pointer;
-          color: white;
-          font-weight: bold;
+        tr:hover {
+          background: #f0f6ff;
         }
 
         .edit-btn {
-          background: #33b5e5;
+          padding: 5px 8px;
+          background: #3b82f6;
           border: none;
-          padding: 5px 10px;
           border-radius: 6px;
           color: white;
           margin-right: 5px;
         }
 
         .delete-btn {
-          background: #ff4444;
+          padding: 5px 8px;
+          background: #ef4444;
           border: none;
-          padding: 5px 10px;
           border-radius: 6px;
           color: white;
         }
@@ -259,36 +304,37 @@ function AdminDashboard() {
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgba(0,0,0,0.5);
+          background: rgba(0,0,0,0.4);
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 999;
         }
 
         .popup-card {
-          background: rgba(255,255,255,0.15);
-          backdrop-filter: blur(10px);
-          padding: 30px;
+          background: white;
+          padding: 25px;
           border-radius: 12px;
-          color: white;
           width: 320px;
+          border: 1px solid #dce3f0;
         }
 
         input, select {
           width: 100%;
           padding: 10px;
           margin: 8px 0;
-          border: none;
           border-radius: 8px;
-          background: rgba(255,255,255,0.2);
-          color: white;
+          border: 1px solid #bfc9dd;
+        }
+
+        input:focus, select:focus {
+          outline: none;
+          border-color: #2563eb;
+          box-shadow: 0 0 3px #93b5ff;
         }
 
         .popup-actions {
           display: flex;
           gap: 10px;
-          margin-top: 10px;
         }
 
         .btn {
@@ -296,32 +342,25 @@ function AdminDashboard() {
           padding: 10px;
           border: none;
           border-radius: 8px;
-          background: linear-gradient(90deg,#ff416c,#ff4b2b);
-          font-weight: bold;
+          background: #2563eb;
           color: white;
+          font-weight: bold;
           cursor: pointer;
         }
 
         .btn.cancel {
-          background: #888;
+          background: #9ca3af;
         }
 
         @media (max-width: 768px) {
           .dashboard-container {
             flex-direction: column;
           }
-
           .sidebar {
             width: 100%;
             flex-direction: row;
             justify-content: space-around;
-            align-items: center;
           }
-
-          .main-content {
-            padding: 10px;
-          }
-
           .popup-card {
             width: 90%;
           }

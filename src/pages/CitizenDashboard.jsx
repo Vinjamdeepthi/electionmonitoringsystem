@@ -6,7 +6,6 @@ function CitizenDashboard() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  // Initial state (no hardcoded data)
   const [votingDetails, setVotingDetails] = useState({
     proofId: "",
     location: "",
@@ -16,9 +15,9 @@ function CitizenDashboard() {
 
   const [timeRemaining, setTimeRemaining] = useState("");
 
-  // Countdown timer effect
   useEffect(() => {
     if (!votingDetails.time) return;
+
     const interval = setInterval(() => {
       const now = new Date();
       const voteTime = new Date(votingDetails.time);
@@ -29,7 +28,7 @@ function CitizenDashboard() {
         clearInterval(interval);
       } else {
         const hours = Math.floor(diff / (1000 * 60 * 60));
-        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
         const seconds = Math.floor((diff / 1000) % 60);
         setTimeRemaining(`${hours}h ${minutes}m ${seconds}s`);
       }
@@ -38,13 +37,15 @@ function CitizenDashboard() {
     return () => clearInterval(interval);
   }, [votingDetails.time]);
 
-  // CRUD functions
   const handleCreate = (e) => {
     e.preventDefault();
-    if (!votingDetails.proofId || !votingDetails.location || !votingDetails.time) {
+    const { proofId, location, time } = votingDetails;
+
+    if (!proofId || !location || !time) {
       alert("Please fill all fields before saving.");
       return;
     }
+
     alert("Voting details added successfully!");
   };
 
@@ -52,74 +53,100 @@ function CitizenDashboard() {
     const field = prompt("What do you want to update? (proof/location/time)");
     if (!field) return;
 
-    const newValue = prompt(`Enter new ${field}:`);
-    if (newValue) {
-      setVotingDetails({ ...votingDetails, [field]: newValue });
-      alert(`${field} updated successfully!`);
+    const keyMap = { proof: "proofId", location: "location", time: "time" };
+    if (!keyMap[field]) {
+      alert("Invalid field. Use: proof, location, or time.");
+      return;
     }
+
+    const newValue = prompt(`Enter new ${field}:`);
+    if (!newValue) return;
+
+    setVotingDetails({ ...votingDetails, [keyMap[field]]: newValue });
+
+    alert(`${field} updated successfully!`);
   };
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete all voting details?")) {
+    if (window.confirm("Are you sure you want to delete all details?")) {
       setVotingDetails({ proofId: "", location: "", time: "", voted: false });
+      setTimeRemaining("");
     }
   };
 
-  const toggleVoteStatus = () => {
+  const toggleVoteStatus = () =>
     setVotingDetails({ ...votingDetails, voted: !votingDetails.voted });
-  };
 
   return (
     <div className="page-background">
       <div className="card">
-        <h1 className="title">👤 Citizen Dashboard</h1>
+        <h1 className="title">Citizen Dashboard</h1>
         <p className="subtitle">Welcome, {user?.username}!</p>
 
-        {/* Info Section */}
         <div className="info-section">
-          <h3>📄 Proof ID:</h3>
+          <h3>Proof ID:</h3>
           <p>{votingDetails.proofId || "Not added"}</p>
 
-          <h3>📍 Location:</h3>
+          <h3>Location:</h3>
           <p>{votingDetails.location || "Not added"}</p>
 
-          <h3>🕒 Voting Time:</h3>
-          <p>{votingDetails.time ? new Date(votingDetails.time).toLocaleString() : "Not set"}</p>
+          <h3>Voting Time:</h3>
+          <p>
+            {votingDetails.time
+              ? new Date(votingDetails.time).toLocaleString()
+              : "Not set"}
+          </p>
 
-          <h3>⏰ Time Remaining:</h3>
+          <h3>Time Remaining:</h3>
           <p>{timeRemaining || "No time selected"}</p>
 
-          <h3>✅ Voting Status:</h3>
+          <h3>Voting Status:</h3>
           <p className={`status ${votingDetails.voted ? "done" : "pending"}`}>
             {votingDetails.voted ? "Voted" : "Not yet voted"}
           </p>
         </div>
 
-        {/* CRUD Section */}
         <form className="crud-form" onSubmit={handleCreate}>
           <input
             type="text"
             placeholder="Enter Proof ID"
             value={votingDetails.proofId}
-            onChange={(e) => setVotingDetails({ ...votingDetails, proofId: e.target.value })}
+            onChange={(e) =>
+              setVotingDetails({ ...votingDetails, proofId: e.target.value })
+            }
           />
+
           <input
             type="text"
             placeholder="Enter Voting Location"
             value={votingDetails.location}
-            onChange={(e) => setVotingDetails({ ...votingDetails, location: e.target.value })}
+            onChange={(e) =>
+              setVotingDetails({ ...votingDetails, location: e.target.value })
+            }
           />
+
           <input
             type="datetime-local"
             value={votingDetails.time}
-            onChange={(e) => setVotingDetails({ ...votingDetails, time: e.target.value })}
+            onChange={(e) =>
+              setVotingDetails({ ...votingDetails, time: e.target.value })
+            }
           />
-          <button type="submit" className="btn">💾 Save</button>
+
+          <button type="submit" className="btn primary">
+            Save Details
+          </button>
         </form>
 
         <div className="crud-options">
-          <button className="btn" onClick={handleUpdate}>✏️ Update</button>
-          <button className="btn danger" onClick={handleDelete}>🗑️ Delete</button>
+          <button className="btn secondary" onClick={handleUpdate}>
+            Update
+          </button>
+
+          <button className="btn danger" onClick={handleDelete}>
+            Delete
+          </button>
+
           <button className="btn success" onClick={toggleVoteStatus}>
             {votingDetails.voted ? "Undo Vote" : "Mark as Voted"}
           </button>
@@ -143,62 +170,73 @@ function CitizenDashboard() {
           display: flex;
           justify-content: center;
           align-items: center;
-          background: linear-gradient(135deg,#1a2a6c,#b21f1f,#fdbb2d);
-          background-size: 300% 300%;
-          animation: gradientShift 12s ease infinite;
-        }
-
-        @keyframes gradientShift {
-          0% {background-position:0% 50%}
-          50% {background-position:100% 50%}
-          100% {background-position:0% 50%}
+          background: #f2f5ff;
         }
 
         .card {
-          background: rgba(255,255,255,0.15);
-          backdrop-filter: blur(10px);
-          padding: 40px;
-          border-radius: 16px;
-          color: white;
-          text-align: center;
+          background: white;
+          padding: 30px;
+          border-radius: 14px;
           width: 100%;
-          max-width: 400px;
-          box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+          max-width: 420px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+          border: 1px solid #d3ddf5;
         }
 
         .title {
-          font-size: 1.8rem;
-          margin-bottom: 20px;
+          text-align: center;
+          color: #1d4ed8;
+          margin-bottom: 5px;
+        }
+
+        .subtitle {
+          text-align: center;
+          color: #475569;
         }
 
         .info-section {
-          text-align: left;
-          background: rgba(255,255,255,0.1);
+          background: #f8faff;
+          border: 1px solid #c7d2fe;
           padding: 15px;
           border-radius: 10px;
           margin-bottom: 25px;
         }
 
-        .status.done { color: #4ade80; font-weight: bold; }
-        .status.pending { color: #f87171; font-weight: bold; }
+        .info-section h3 {
+          margin: 8px 0 2px;
+          color: #1e3a8a;
+        }
+
+        .status.done {
+          color: green;
+          font-weight: bold;
+        }
+
+        .status.pending {
+          color: red;
+          font-weight: bold;
+        }
 
         .crud-form input {
           width: 100%;
           padding: 10px;
-          margin: 6px 0;
-          border: none;
+          margin: 8px 0;
           border-radius: 8px;
-          background: rgba(255,255,255,0.2);
-          color: white;
-          font-size: 1rem;
+          border: 1px solid #b7c5e8;
+          background: white;
+        }
+
+        .crud-form input:focus {
           outline: none;
+          border-color: #2563eb;
+          box-shadow: 0 0 4px #a5c4ff;
         }
 
         .crud-options {
           display: flex;
           flex-direction: column;
           gap: 10px;
-          margin-top: 10px;
+          margin-top: 15px;
         }
 
         .btn {
@@ -206,30 +244,29 @@ function CitizenDashboard() {
           padding: 12px;
           border: none;
           border-radius: 8px;
-          background: linear-gradient(90deg,#ff416c,#ff4b2b);
-          font-weight: bold;
-          color: white;
           cursor: pointer;
-          transition: 0.3s;
+          font-weight: bold;
+          transition: 0.25s;
         }
 
-        .btn:hover {
-          transform: scale(1.05);
-          box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
+        .btn.primary { background: #2563eb; color: white; }
+        .btn.primary:hover { background: #1e40af; }
 
-        .btn.danger {
-          background: linear-gradient(90deg, #ff4b2b, #c31432);
-        }
+        .btn.secondary { background: #e2e8f0; }
+        .btn.secondary:hover { background: #cbd5e1; }
 
-        .btn.success {
-          background: linear-gradient(90deg, #00b09b, #96c93d);
-        }
+        .btn.success { background: #10b981; color: white; }
+        .btn.success:hover { background: #059669; }
+
+        .btn.danger { background: #ef4444; color: white; }
+        .btn.danger:hover { background: #dc2626; }
 
         .btn.logout {
           margin-top: 15px;
-          background: rgba(255,255,255,0.2);
+          background: #475569;
+          color: white;
         }
+        .btn.logout:hover { background: #334155; }
       `}</style>
     </div>
   );

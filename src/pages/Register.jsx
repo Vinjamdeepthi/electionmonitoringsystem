@@ -7,7 +7,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState(""); // ✅ Added password
+  const [password, setPassword] = useState("");
   const [role, setRole] = useState("Citizen");
 
   const handleSubmit = (e) => {
@@ -45,7 +45,6 @@ const Register = () => {
             <option value="Admin">Admin</option>
             <option value="Citizen">Citizen</option>
             <option value="Observer">Observer</option>
-           
           </select>
 
           <button type="submit" className="btn">Register</button>
@@ -59,81 +58,89 @@ const Register = () => {
         </p>
       </div>
 
-      {/* ✅ Same CSS as Login for consistent UI */}
       <style>{`
-  .page-background {
-    min-height: 100vh;
-    width: 100vw; /* take full width */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg,#1a2a6c,#b21f1f,#fdbb2d);
-    background-size: 300% 300%;
-    animation: gradientShift 12s ease infinite;
-  }
-  @keyframes gradientShift {
-    0% {background-position:0% 50%}
-    50% {background-position:100% 50%}
-    100% {background-position:0% 50%}
-  }
+        .page-background {
+          min-height: 100vh;
+          width: 100vw;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #f0f4f8; /* Light ECI Blue Background */
+        }
 
-  .card {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(10px);
-    padding: 40px;
-    border-radius: 16px;
-    color: white;
-    text-align: center;
-    width: 100%;
-    max-width: 400px; /* box stays centered */
-    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-  }
+        .card {
+          background: #ffffff;
+          padding: 40px;
+          border-radius: 16px;
+          color: #1a1a1a;
+          text-align: center;
+          width: 100%;
+          max-width: 400px;
+          box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
 
-  .title {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-  }
+        .title {
+          font-size: 1.8rem;
+          margin-bottom: 10px;
+          color: #2a2a2a;
+        }
 
-  input, select {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.2);
-    color: white;
-    font-size: 1rem;
-    outline: none;
-  }
-  input::placeholder {
-    color: rgba(255,255,255,0.6);
-  }
+        .subtitle {
+          font-size: 0.95rem;
+          margin-bottom: 20px;
+          color: #555;
+        }
 
-  .btn {
-    width: 100%;
-    padding: 12px;
-    margin-top: 12px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(90deg,#ff416c,#ff4b2b);
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  .btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  }
+        input, select {
+          width: 100%;
+          padding: 12px;
+          margin: 8px 0;
+          border: 1px solid #c1c1c1;
+          border-radius: 8px;
+          background: #fafafa;
+          color: #1a1a1a;
+          font-size: 1rem;
+          outline: none;
+        }
 
-  .footer {
-    margin-top: 20px;
-    font-size: 0.9rem;
-    opacity: 0.8;
-    font-style: italic;
-  }
-`}</style>
+        input::placeholder {
+          color: #999;
+        }
 
+        .btn {
+          width: 100%;
+          padding: 12px;
+          margin-top: 12px;
+          border: none;
+          border-radius: 8px;
+          background: #004aad; /* ECI Blue Button */
+          font-weight: bold;
+          color: white;
+          cursor: pointer;
+          transition: 0.3s;
+        }
+
+        .btn:hover {
+          background: #00357a;
+          transform: scale(1.03);
+        }
+
+        .footer {
+          margin-top: 20px;
+          font-size: 0.9rem;
+          opacity: 0.9;
+        }
+
+        .link {
+          color: #004aad;
+          cursor: pointer;
+          font-weight: bold;
+        }
+
+        .link:hover {
+          text-decoration: underline;
+        }
+      `}</style>
     </div>
   );
 };

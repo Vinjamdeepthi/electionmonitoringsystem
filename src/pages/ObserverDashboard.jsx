@@ -54,13 +54,31 @@ function ObserverDashboard() {
           <li>⚠️ Report Anomalies</li>
           <li>📢 Transparency Insights</li>
         </ul>
-        <button className="logout-btn" onClick={() => { logout(); navigate("/login"); }}>Logout</button>
+        <button
+          className="logout-btn"
+          onClick={() => {
+            logout();
+            navigate("/login");
+          }}
+        >
+          Logout
+        </button>
       </div>
 
       {/* Main Content */}
       <div className="main-content">
         <h1>Candidate Reports</h1>
-        <button className="add-btn" onClick={() => { setFormData({}); setEditIndex(null); setShowForm(true); }}>➕ Add Report</button>
+
+        <button
+          className="add-btn"
+          onClick={() => {
+            setFormData({});
+            setEditIndex(null);
+            setShowForm(true);
+          }}
+        >
+          ➕ Add Report
+        </button>
 
         <div className="candidate-list">
           {candidates.map((c, idx) => (
@@ -73,7 +91,9 @@ function ObserverDashboard() {
         </div>
 
         <h2>Submitted Reports</h2>
-        {reports.length === 0 ? <p>No reports submitted.</p> : (
+        {reports.length === 0 ? (
+          <p>No reports submitted.</p>
+        ) : (
           <table>
             <thead>
               <tr>
@@ -90,8 +110,12 @@ function ObserverDashboard() {
                   <td>{r.issue}</td>
                   <td>{r.details}</td>
                   <td>
-                    <button className="edit-btn" onClick={() => handleEdit(idx)}>✏️</button>
-                    <button className="delete-btn" onClick={() => handleDelete(idx)}>🗑️</button>
+                    <button className="edit-btn" onClick={() => handleEdit(idx)}>
+                      ✏️
+                    </button>
+                    <button className="delete-btn" onClick={() => handleDelete(idx)}>
+                      🗑️
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -108,68 +132,80 @@ function ObserverDashboard() {
             <select name="candidate" value={formData.candidate || ""} onChange={handleChange}>
               <option value="">Select Candidate</option>
               {candidates.map((c, idx) => (
-                <option key={idx} value={c.name}>{c.name}</option>
+                <option key={idx} value={c.name}>
+                  {c.name}
+                </option>
               ))}
             </select>
-            <input name="issue" placeholder="Issue" value={formData.issue || ""} onChange={handleChange} />
-            <textarea name="details" placeholder="Details" value={formData.details || ""} onChange={handleChange} rows="4" />
+            <input
+              name="issue"
+              placeholder="Issue"
+              value={formData.issue || ""}
+              onChange={handleChange}
+            />
+            <textarea
+              name="details"
+              placeholder="Details"
+              value={formData.details || ""}
+              onChange={handleChange}
+              rows="4"
+            />
             <div className="popup-actions">
-              <button className="btn" onClick={handleSave}>💾 Save</button>
-              <button className="btn cancel" onClick={() => setShowForm(false)}>❌ Cancel</button>
+              <button className="btn" onClick={handleSave}>
+                💾 Save
+              </button>
+              <button className="btn cancel" onClick={() => setShowForm(false)}>
+                ❌ Cancel
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Styles */}
+      {/* --- Updated ECI Theme Styles --- */}
       <style>{`
-        html, body, #root {
-          margin: 0;
-          padding: 0;
-          height: 100%;
-          width: 100%;
-          font-family: 'Segoe UI', sans-serif;
-        }
-
-        *, *::before, *::after {
-          box-sizing: border-box;
-        }
-
         .observer-container {
           display: flex;
           height: 100vh;
           width: 100vw;
-          background: linear-gradient(135deg,#1a2a6c,#b21f1f,#fdbb2d);
-          background-size: 300% 300%;
-          animation: gradientShift 12s ease infinite;
-          color: white;
+          background: #f0f4f8;
+          color: #1a1a1a;
         }
 
-        @keyframes gradientShift {
-          0% { background-position:0% 50% }
-          50% { background-position:100% 50% }
-          100% { background-position:0% 50% }
-        }
-
+        /* Sidebar */
         .sidebar {
           width: 250px;
-          background: rgba(255,255,255,0.15);
-          backdrop-filter: blur(10px);
+          background: #ffffff;
           padding: 20px;
+          border-right: 2px solid #dce3eb;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+          box-shadow: 2px 0 10px rgba(0,0,0,0.1);
         }
 
-        .sidebar h2 { text-align: center; margin-bottom: 20px; }
-        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar h2 {
+          color: #004aad;
+          text-align: center;
+          margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+          list-style: none;
+          padding: 0;
+        }
+
         .sidebar li {
-          padding: 12px; margin: 8px 0; border-radius: 8px; cursor: default;
-          background: rgba(255,255,255,0.1);
+          padding: 12px;
+          margin: 8px 0;
+          border-radius: 8px;
+          background: #eef4ff;
+          color: #00367a;
+          font-weight: 500;
         }
 
         .logout-btn {
-          background: linear-gradient(90deg,#ff416c,#ff4b2b);
+          background: #d9534f;
           border: none;
           padding: 10px;
           border-radius: 8px;
@@ -177,9 +213,9 @@ function ObserverDashboard() {
           font-weight: bold;
           cursor: pointer;
           width: 100%;
-          margin-top: 20px;
         }
 
+        /* Main content */
         .main-content {
           flex: 1;
           padding: 40px;
@@ -187,9 +223,9 @@ function ObserverDashboard() {
         }
 
         .add-btn {
-          background: #00c851;
+          background: #004aad;
           border: none;
-          padding: 10px 14px;
+          padding: 10px 16px;
           border-radius: 6px;
           cursor: pointer;
           color: white;
@@ -197,35 +233,37 @@ function ObserverDashboard() {
           margin-bottom: 20px;
         }
 
-        .candidate-list {
-          display: flex;
-          gap: 20px;
-          flex-wrap: wrap;
-          margin-bottom: 30px;
-        }
-
+        /* Cards */
         .candidate-card {
-          background: rgba(255,255,255,0.15);
-          backdrop-filter: blur(10px);
+          background: white;
           padding: 20px;
           border-radius: 12px;
           width: 220px;
-          box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+          border: 1px solid #e0e0e0;
         }
 
         table {
           width: 100%;
           border-collapse: collapse;
+          background: white;
+          border-radius: 10px;
+          overflow: hidden;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         th, td {
-          border-bottom: 1px solid rgba(255,255,255,0.2);
+          border-bottom: 1px solid #ddd;
           padding: 10px;
-          text-align: left;
+        }
+
+        th {
+          background: #004aad;
+          color: white;
         }
 
         .edit-btn {
-          background: #33b5e5;
+          background: #007bff;
           border: none;
           padding: 5px 10px;
           border-radius: 6px;
@@ -234,51 +272,47 @@ function ObserverDashboard() {
         }
 
         .delete-btn {
-          background: #ff4444;
+          background: #d9534f;
           border: none;
           padding: 5px 10px;
           border-radius: 6px;
           color: white;
         }
 
+        /* Popup */
         .popup {
           position: fixed;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgba(0,0,0,0.5);
+          background: rgba(0,0,0,0.4);
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 999;
         }
 
         .popup-card {
-          background: rgba(255,255,255,0.15);
-          backdrop-filter: blur(10px);
+          background: white;
           padding: 30px;
           border-radius: 12px;
-          color: white;
-          width: 320px;
-          border: none;
+          width: 340px;
+          box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
 
-        textarea {
+        .popup-card select,
+        .popup-card input,
+        .popup-card textarea {
           width: 100%;
           padding: 10px;
           margin: 8px 0;
-          border: none;
+          border: 1px solid #c1c1c1;
           border-radius: 8px;
-          background: rgba(255,255,255,0.2);
-          color: white;
-          resize: none;
         }
 
         .popup-actions {
           display: flex;
-          gap: 10px;
-          margin-top: 10px;
+          gap: 12px;
         }
 
         .btn {
@@ -286,7 +320,7 @@ function ObserverDashboard() {
           padding: 10px;
           border: none;
           border-radius: 8px;
-          background: linear-gradient(90deg,#ff416c,#ff4b2b);
+          background: #004aad;
           font-weight: bold;
           color: white;
           cursor: pointer;
@@ -294,32 +328,6 @@ function ObserverDashboard() {
 
         .btn.cancel {
           background: #888;
-        }
-
-        @media (max-width: 768px) {
-          .observer-container {
-            flex-direction: column;
-          }
-
-          .sidebar {
-            width: 100%;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-          }
-
-          .main-content {
-            padding: 20px;
-          }
-
-          .candidate-list {
-            flex-direction: column;
-            gap: 15px;
-          }
-
-          .popup-card {
-            width: 90%;
-          }
         }
       `}</style>
     </div>
