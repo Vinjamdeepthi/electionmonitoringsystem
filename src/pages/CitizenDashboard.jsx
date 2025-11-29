@@ -217,14 +217,21 @@ function CitizenDashboard() {
           font-weight: bold;
         }
 
-        .crud-form input {
-          width: 100%;
-          padding: 10px;
-          margin: 8px 0;
-          border-radius: 8px;
-          border: 1px solid #b7c5e8;
-          background: white;
-        }
+        
+          .crud-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #b7c5e8;
+  background: white;
+  color: #000 !important; /* <-- FIXED (text will now be black) */
+}
+
+.crud-form input::placeholder {
+  color: #000 !important; /* optional: makes placeholder black */
+}
+
 
         .crud-form input:focus {
           outline: none;
@@ -252,8 +259,8 @@ function CitizenDashboard() {
         .btn.primary { background: #2563eb; color: white; }
         .btn.primary:hover { background: #1e40af; }
 
-        .btn.secondary { background: #e2e8f0; }
-        .btn.secondary:hover { background: #cbd5e1; }
+        .btn.secondary { background: #f5d016ff; }
+        .btn.secondary:hover { background: #f5d016ff; }
 
         .btn.success { background: #10b981; color: white; }
         .btn.success:hover { background: #059669; }
